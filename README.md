@@ -1,1 +1,1 @@
-Testando alerta no Discord 
+Testando alerta no Discord! 
