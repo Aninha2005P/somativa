@@ -1,0 +1,3 @@
+Este é um arquivo de teste para verificar se os alertas do GitHub Actions estão funcionando corretamente.
+
+Se este commit aparecer no Discord, o workflow está configurado com sucesso! 🚀
