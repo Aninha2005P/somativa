@@ -16,3 +16,12 @@ jobs:
 
       - name: Verificar se arquivos existem
         run: ls -R
+
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enviar alerta para o Discord
+        run: |
+          curl -H "Content-Type: application/json" \
+          -d "{\"content\": \"🚀 Novo push/merge no branch main do repositório $GITHUB_REPOSITORY por $GITHUB_ACTOR. Mensagem: $GITHUB_EVENT_HEAD_COMMIT_MESSAGE\"}" \
+          ${{ secrets.DISCORD_WEBHOOK }}
