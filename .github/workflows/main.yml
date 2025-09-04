@@ -19,9 +19,15 @@ jobs:
 
   notify:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Enviar alerta para o Discord
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Notificar no Discord
         run: |
+          COMMIT_MSG="$(git log -1 --pretty=%B)"
           curl -H "Content-Type: application/json" \
-          -d "{\"content\": \"🚀 Novo push/merge no branch main do repositório $GITHUB_REPOSITORY por $GITHUB_ACTOR. Mensagem: $GITHUB_EVENT_HEAD_COMMIT_MESSAGE\"}" \
-          ${{ secrets.DISCORD_WEBHOOK }}
+               -d "{\"content\": \"🚀 Novo push/merge no branch $GITHUB_REF_NAME do repositório $GITHUB_REPOSITORY por $GITHUB_ACTOR. Mensagem: ${COMMIT_MSG}\"}" \
+               ${{ secrets.DISCORD_WEBHOOK }}
+
