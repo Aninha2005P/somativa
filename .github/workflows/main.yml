@@ -1,0 +1,34 @@
+
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Verificar se arquivos existem
+        run: ls -R
+
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Notificar no Discord
+        run: |
+          COMMIT_MSG="$(git log -1 --pretty=%B)"
+          curl -H "Content-Type: application/json" \
+               -d "{\"content\": \"🚀 Novo push/merge no branch $GITHUB_REF_NAME do repositório $GITHUB_REPOSITORY por $GITHUB_ACTOR. Mensagem: ${COMMIT_MSG}\"}" \
+               ${{ secrets.DISCORD_WEBHOOK }}
+
